@@ -14,6 +14,7 @@ class NewArtist extends Component {
   _handleSubmit = (e) => {
     e.preventDefault()
     console.log("ADDING NEW ARTIST")
+    this.props.addArtist(this.state.newArtist)
   }
   _handleChange = (e) => {
     const attributeValue = e.target.value
