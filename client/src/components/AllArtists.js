@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import ArtistCard from './ArtistCard';
 import styled from 'styled-components';
+import NewArtist from './NewArtist';
 
 const ArtistListStyles = styled.div`
   margin: 20px 5%;
@@ -17,6 +18,7 @@ class AllArtists extends Component{
     super();
     this.state = {
       error: '',
+      newArtist: false,
       artists: []
     }
   }
@@ -34,17 +36,25 @@ class AllArtists extends Component{
       this.setState({error: err})
     }
   }
-
+  _toggleNewArtist = () => {
+    const newState = {...this.state}
+    newState.newArtist = !newState.newArtist
+    this.setState(newState)
+  }
   render(){
     if (this.state.error){
       return <h1>{this.state.error.message}</h1>
     }
     return (
-      <ArtistListStyles>
-        {this.state.artists.map((artist) => (
-          <ArtistCard key={artist.id} artist={artist} />
-        ))}
-      </ArtistListStyles>
+      <div>
+        {this.state.newArtist ? <NewArtist /> : null}
+        <button onClick={this._toggleNewArtist}>Add Artist</button>
+        <ArtistListStyles>
+          {this.state.artists.map((artist) => (
+            <ArtistCard key={artist.id} artist={artist} />
+          ))}
+        </ArtistListStyles>
+      </div>
     )
   }
 }
